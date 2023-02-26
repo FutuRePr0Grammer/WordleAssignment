@@ -20,22 +20,26 @@ val wordList = File("wordle.txt").readLines()
 
 
 // Pick a word from the file, randomly
-fun selectWord():String {
+fun selectWord(): String {
     var randomInt = Random().nextInt(0, wordList.count() - 1)
-    var selectedWord = wordList[randomInt]
-    return selectedWord
+    return wordList[randomInt]
 }
 
 
 // Check if user's word exists in the file
 fun legitGuess(guess:String):Boolean{
-    return true
+    var isInFile = false
+    if(wordList.contains(guess)){
+        isInFile = true
+    }
+    return isInFile
 }
 
 
 // build a map<character,count> for the word
 // mutableMapOf<Char, Int>()
 // Key is a letter, value counts occurrences of the letter
+// TODO: Add actual functionality to body
 fun countCharacterOccurrences(str:String):Map<Char, Int>{
     var tempMap = mapOf('a' to 3, 'b' to 4)
     return tempMap
@@ -54,6 +58,7 @@ fun countCharacterOccurrences(str:String):Map<Char, Int>{
 //    and decrement the occurrences for the corresponding letter
 //    Otherwise, highlight non-matches with a black background
 // 5. Return the game state (remember to reset the background color)
+// TODO: Add actual functionality to body
 fun gameState(guess: String, word: String): String{
     return "Temp"
 }
@@ -63,6 +68,7 @@ fun gameState(guess: String, word: String): String{
 
 // Determine when the game is over and print out the game state.
 // If the game is over, congratulate the user
+// TODO: Add actual functionality to body
 fun gameOver(userInput: String, word: String): Boolean{
     return true
 }
@@ -76,6 +82,21 @@ fun gameOver(userInput: String, word: String): Boolean{
 //    If the game is over, exit
 // 4. If the user didn't guess the word, show it to the user
 fun main() {
+    // get a randomly selected word and print it
     var selectedWord = selectWord()
-    println(selectedWord)
+    println("*** The answer is $ANSI_GREEN$selectedWord$ANSI_RESET ***")
+
+    // get the user input up to six times (if gameOver = true, user won, if false but attempts = 6, lost
+    // TODO: make it match the conditions in the comment above. Kept simple for now to check functionality
+    println("Guess: ")
+    var userGuess = readln()
+    println("Your guess: $userGuess")
+    //check if user guess is a word in the file
+    var isGuessInFile = legitGuess(userGuess)
+    if(isGuessInFile){
+        println("Your guess exists in the file!")
+    }
+    else{
+        println("Your guess does not exist in the file")
+    }
 }
