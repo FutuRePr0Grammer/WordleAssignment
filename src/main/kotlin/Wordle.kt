@@ -41,8 +41,19 @@ fun legitGuess(guess:String):Boolean{
 // Key is a letter, value counts occurrences of the letter
 // TODO: Add actual functionality to body
 fun countCharacterOccurrences(str:String):Map<Char, Int>{
-    var tempMap = mapOf('a' to 3, 'b' to 4)
-    return tempMap
+    var characterCountMap = mutableMapOf<Char, Int>()
+    // count the occurrence of each letter in the word and add it to the map
+    // NOTE: until acts as if doing str.count() - 1. Will stop and not iterate once i = str length
+    for(i in 0 until str.count()){
+        // get the next character in the word
+        var characterAtIndex = str[i]
+        // if the key doesn't exist, put it in the map with a value of 0
+        characterCountMap.putIfAbsent(characterAtIndex, 0)
+        // iterate the value of the current key (char) by 1, signifying the count has gone up by 1
+        // NOTE: the !! is a non-null assertion (cannot be null)
+        characterCountMap[characterAtIndex] = characterCountMap[characterAtIndex]!!.plus(1)
+    }
+    return characterCountMap
 }
 
 
@@ -86,6 +97,11 @@ fun main() {
     var selectedWord = selectWord()
     println("*** The answer is $ANSI_GREEN$selectedWord$ANSI_RESET ***")
 
+    // get the character count for the selected word
+    var characterCountMap = countCharacterOccurrences(selectedWord)
+    // debugging statement, print the map contents to make sure it is populated correctly
+    println(characterCountMap.entries)
+
     // get the user input up to six times (if gameOver = true, user won, if false but attempts = 6, lost
     // TODO: make it match the conditions in the comment above. Kept simple for now to check functionality
     println("Guess: ")
@@ -93,6 +109,8 @@ fun main() {
     println("Your guess: $userGuess")
     //check if user guess is a word in the file
     var isGuessInFile = legitGuess(userGuess)
+
+    // debugging statements to check that legitGuess() is working as intended
     if(isGuessInFile){
         println("Your guess exists in the file!")
     }
