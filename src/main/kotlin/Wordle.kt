@@ -20,17 +20,26 @@ val wordList = File("wordle.txt").readLines()
 
 
 // Pick a word from the file, randomly
-fun selectWord():String
+fun selectWord():String {
+    var randomInt = Random().nextInt(0, wordList.count() - 1)
+    var selectedWord = wordList[randomInt]
+    return selectedWord
+}
 
 
 // Check if user's word exists in the file
-fun legitGuess(guess:String):Boolean
+fun legitGuess(guess:String):Boolean{
+    return true
+}
 
 
 // build a map<character,count> for the word
 // mutableMapOf<Char, Int>()
 // Key is a letter, value counts occurrences of the letter
-fun countCharacterOccurrences(str:String):Map<Char, Int>
+fun countCharacterOccurrences(str:String):Map<Char, Int>{
+    var tempMap = mapOf('a' to 3, 'b' to 4)
+    return tempMap
+}
 
 
 
@@ -45,14 +54,18 @@ fun countCharacterOccurrences(str:String):Map<Char, Int>
 //    and decrement the occurrences for the corresponding letter
 //    Otherwise, highlight non-matches with a black background
 // 5. Return the game state (remember to reset the background color)
-fun gameState(guess: String, word: String): String
+fun gameState(guess: String, word: String): String{
+    return "Temp"
+}
 
 
 
 
 // Determine when the game is over and print out the game state.
 // If the game is over, congratulate the user
-fun gameOver(userInput: String, word: String): Boolean
+fun gameOver(userInput: String, word: String): Boolean{
+    return true
+}
 
 
 
@@ -62,4 +75,7 @@ fun gameOver(userInput: String, word: String): Boolean
 //    call legitGuess()
 //    If the game is over, exit
 // 4. If the user didn't guess the word, show it to the user
-fun main()
+fun main() {
+    var selectedWord = selectWord()
+    println(selectedWord)
+}
