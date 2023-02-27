@@ -70,7 +70,7 @@ fun countCharacterOccurrences(str:String):Map<Char, Int>{
 fun gameState(guess: String, word: String): String {
     // variable to hold the user's guess as an array of strings once the characters are color-coded
     // var colorCodedGuess = arrayOf<String>()
-    var colorCodedGuess = Array(5) {""}
+    var colorCodedGuess = Array(5) { "" }
 
     // count the occurrences of the letters in the selected word and the user's guess
     // NOTE: maps are not inherently mutable (changeable). Must set this explicitly
@@ -94,7 +94,10 @@ fun gameState(guess: String, word: String): String {
     }
 
     // convert array of strings to a string and return it
-    return colorCodedGuess.joinToString(",")
+    // return colorCodedGuess.joinToString(",")
+
+    return colorCodedGuess[0] + colorCodedGuess[1] +
+            colorCodedGuess[2] + colorCodedGuess[3] + colorCodedGuess[4]
 }
 
 
