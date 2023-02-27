@@ -39,7 +39,6 @@ fun legitGuess(guess:String):Boolean{
 // build a map<character,count> for the word
 // mutableMapOf<Char, Int>()
 // Key is a letter, value counts occurrences of the letter
-// TODO: Add actual functionality to body
 fun countCharacterOccurrences(str:String):Map<Char, Int>{
     var characterCountMap = mutableMapOf<Char, Int>()
     // count the occurrence of each letter in the word and add it to the map
@@ -57,7 +56,6 @@ fun countCharacterOccurrences(str:String):Map<Char, Int>{
 }
 
 
-
 // Color-code user's guess using information about the selected word
 // 1. Store color-coded user's guess as array of strings. Five letters, index 0 to 4.
 // 2. Count occurrences of each letter in the word
@@ -70,8 +68,33 @@ fun countCharacterOccurrences(str:String):Map<Char, Int>{
 //    Otherwise, highlight non-matches with a black background
 // 5. Return the game state (remember to reset the background color)
 // TODO: Add actual functionality to body
-fun gameState(guess: String, word: String): String{
-    return "Temp"
+fun gameState(guess: String, word: String): String {
+    // variable to hold the user's guess as an array of strings once the characters are color-coded
+    // var colorCodedGuess = arrayOf<String>()
+    var colorCodedGuess = Array(5) {""}
+
+    // count the occurrences of the letters in the selected word and the user's guess
+    // NOTE: maps are not inherently mutable (changeable). Must set this explicitly
+    var wordCharacterCount = countCharacterOccurrences(word).toMutableMap()
+
+    // store the user's guess as an array of color-coded strings to signify how correct they were
+    for (i in 0..4) {
+        if (wordCharacterCount[guess[i]] != 0 && word.contains(guess[i]) && guess[i] != word[i]) {
+            colorCodedGuess[i] = "$ANSI_YELLOW${guess[i]}$ANSI_RESET"
+            continue
+        } else if (guess[i] == word[i]) {
+            colorCodedGuess[i] = "$ANSI_GREEN${guess[i]}$ANSI_RESET"
+            wordCharacterCount[guess[i]] = wordCharacterCount[guess[i]]!!.minus(1)
+            continue
+        }
+        if (wordCharacterCount[guess[i]] == 0 || !word.contains(guess[i])) {
+            colorCodedGuess[i] = "$ANSI_BLACK${guess[i]}$ANSI_RESET"
+            continue
+        }
+    }
+
+    // convert array of strings to a string and return it
+    return colorCodedGuess.joinToString(",")
 }
 
 
@@ -97,24 +120,31 @@ fun main() {
     var selectedWord = selectWord()
     println("*** The answer is $ANSI_GREEN$selectedWord$ANSI_RESET ***")
 
-    // get the character count for the selected word
+    """// get the character count for the selected word - used for debugging
     var characterCountMap = countCharacterOccurrences(selectedWord)
     // debugging statement, print the map contents to make sure it is populated correctly
-    println(characterCountMap.entries)
+    println(characterCountMap.entries)"""
 
     // get the user input up to six times (if gameOver = true, user won, if false but attempts = 6, lost
     // TODO: make it match the conditions in the comment above. Kept simple for now to check functionality
     println("Guess: ")
     var userGuess = readln()
-    println("Your guess: $userGuess")
+
+    """// debugging statement to make sure readln() is working as intended
+    println("Your guess: $userGuess")"""
+
     //check if user guess is a word in the file
     var isGuessInFile = legitGuess(userGuess)
 
-    // debugging statements to check that legitGuess() is working as intended
+    // get and print the user's guess as a color-coded list to signify how correct they were
+    var userGuessColorCoded = gameState(userGuess, selectedWord)
+    println(userGuessColorCoded)
+
+    """// debugging statements to check that legitGuess() is working as intended
     if(isGuessInFile){
         println("Your guess exists in the file!")
     }
     else{
         println("Your guess does not exist in the file")
-    }
+    }"""
 }
