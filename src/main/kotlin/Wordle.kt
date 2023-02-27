@@ -4,7 +4,8 @@ import java.io.File
  * https://www.nytimes.com/games/wordle/index.html
  * https://wordplay.com/
  * Author: Seikyung Jung, David Rochon and Sean Tammelleo
- * Description: A very brief summary of what you or your team did
+ * Description: We implemented the following methods after developing the method bodies.
+ * The game is now fully functional from the terminal.
  */
 
 // Place ANSI escape sequences in a string to change background color. For example,
@@ -178,6 +179,6 @@ fun main() {
     }
 
     if(currentAttempt > 6){
-        println("You lost! Feel free to play again!")
+        println("You lost! The correct word was $selectedWord. free to play again!")
     }
 }
