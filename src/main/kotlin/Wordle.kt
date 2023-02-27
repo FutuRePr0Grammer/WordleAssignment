@@ -105,7 +105,7 @@ fun gameState(guess: String, word: String): String {
 // If the game is over, congratulate the user
 // TODO: Add actual functionality to body
 fun gameOver(userInput: String, word: String): Boolean{
-    return true
+    return userInput == word
 }
 
 
@@ -117,6 +117,11 @@ fun gameOver(userInput: String, word: String): Boolean{
 //    If the game is over, exit
 // 4. If the user didn't guess the word, show it to the user
 fun main() {
+    // variable to store the current attempt
+    var currentAttempt = 1
+    // variable to store the gameOver status
+    var gameOver = false
+
     // get a randomly selected word and print it
     var selectedWord = selectWord()
     println("*** The answer is $ANSI_GREEN$selectedWord$ANSI_RESET ***")
@@ -128,24 +133,51 @@ fun main() {
 
     // get the user input up to six times (if gameOver = true, user won, if false but attempts = 6, lost
     // TODO: make it match the conditions in the comment above. Kept simple for now to check functionality
-    println("Guess: ")
-    var userGuess = readln()
+    while(currentAttempt <= 6 && !gameOver){
+        println("$currentAttempt. Enter a five-letter word: ")
+        var userGuess = readln()
 
-    """// debugging statement to make sure readln() is working as intended
+        if (userGuess.count() != 5){
+            println("The guess must be five letters. Try again.")
+            currentAttempt += 1
+            continue
+        }
+
+        """// debugging statement to make sure readln() is working as intended
     println("Your guess: $userGuess")"""
 
-    //check if user guess is a word in the file
-    var isGuessInFile = legitGuess(userGuess)
+        //check if user guess is a word in the file
+        var isGuessInFile = legitGuess(userGuess)
 
-    // get and print the user's guess as a color-coded list to signify how correct they were
-    var userGuessColorCoded = gameState(userGuess, selectedWord)
-    println(userGuessColorCoded)
+        if(!isGuessInFile){
+            println("The guessed word is not in the file. Try again.")
+            currentAttempt += 1
+            continue
+        }
 
-    """// debugging statements to check that legitGuess() is working as intended
-    if(isGuessInFile){
-        println("Your guess exists in the file!")
+        // get and print the user's guess as a color-coded list to signify how correct they were
+        var userGuessColorCoded = gameState(userGuess, selectedWord)
+        println(userGuessColorCoded)
+
+        """// debugging statements to check that legitGuess() is working as intended
+        if(isGuessInFile){
+            println("Your guess exists in the file!")
+        }
+        else{
+            println("Your guess does not exist in the file")
+        }"""
+
+        gameOver = gameOver(userGuess, selectedWord)
+
+        if(gameOver){
+            println("You won! Congratulations!")
+            break
+        }
+
+        currentAttempt += 1
     }
-    else{
-        println("Your guess does not exist in the file")
-    }"""
+
+    if(currentAttempt > 6){
+        println("You lost! Feel free to play again!")
+    }
 }
