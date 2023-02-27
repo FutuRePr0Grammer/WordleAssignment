@@ -67,7 +67,6 @@ fun countCharacterOccurrences(str:String):Map<Char, Int>{
 //    and decrement the occurrences for the corresponding letter
 //    Otherwise, highlight non-matches with a black background
 // 5. Return the game state (remember to reset the background color)
-// TODO: Add actual functionality to body
 fun gameState(guess: String, word: String): String {
     // variable to hold the user's guess as an array of strings once the characters are color-coded
     // var colorCodedGuess = arrayOf<String>()
@@ -103,7 +102,6 @@ fun gameState(guess: String, word: String): String {
 
 // Determine when the game is over and print out the game state.
 // If the game is over, congratulate the user
-// TODO: Add actual functionality to body
 fun gameOver(userInput: String, word: String): Boolean{
     return userInput == word
 }
@@ -132,7 +130,6 @@ fun main() {
     println(characterCountMap.entries)"""
 
     // get the user input up to six times (if gameOver = true, user won, if false but attempts = 6, lost
-    // TODO: make it match the conditions in the comment above. Kept simple for now to check functionality
     while(currentAttempt <= 6 && !gameOver){
         println("$currentAttempt. Enter a five-letter word: ")
         var userGuess = readln()
