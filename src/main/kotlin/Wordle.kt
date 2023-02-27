@@ -80,15 +80,18 @@ fun gameState(guess: String, word: String): String {
 
     // store the user's guess as an array of color-coded strings to signify how correct they were
     for (i in 0..4) {
+        // Word contains letter, just in different spot
         if (wordCharacterCount[guess[i]] != 0 && word.contains(guess[i]) && guess[i] != word[i]) {
             colorCodedGuess[i] = "$ANSI_YELLOW${guess[i]}$ANSI_RESET"
             wordCharacterCount[guess[i]] = wordCharacterCount[guess[i]]!!.minus(1)
             continue
+        // Word contains letter in the same spot    
         } else if (guess[i] == word[i]) {
             colorCodedGuess[i] = "$ANSI_GREEN${guess[i]}$ANSI_RESET"
             wordCharacterCount[guess[i]] = wordCharacterCount[guess[i]]!!.minus(1)
             continue
         }
+        // Word does not contain letter at all
         if (wordCharacterCount[guess[i]] == 0 || !word.contains(guess[i])) {
             colorCodedGuess[i] = "$ANSI_BLACK${guess[i]}$ANSI_RESET"
             continue
