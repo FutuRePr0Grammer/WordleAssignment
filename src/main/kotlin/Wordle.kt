@@ -21,10 +21,12 @@ val wordList = File("wordle.txt").readLines()
 
 
 // Pick a word from the file, randomly
-fun selectWord(): String {
-    var randomInt = Random().nextInt(0, wordList.count() - 1)
-    return wordList[randomInt]
-}
+//fun selectWord(): String {
+//    var randomInt = Random().nextInt(0, wordList.count() - 1)
+//    return wordList[randomInt]
+//}
+
+fun selectWord():String = wordList[Random().nextInt(wordList.size)]
 
 
 // Check if user's word exists in the file
@@ -140,7 +142,6 @@ fun main() {
 
         if (userGuess.count() != 5){
             println("The guess must be five letters. Try again.")
-            currentAttempt += 1
             continue
         }
 
@@ -152,7 +153,6 @@ fun main() {
 
         if(!isGuessInFile){
             println("The guessed word is not in the file. Try again.")
-            currentAttempt += 1
             continue
         }
 
