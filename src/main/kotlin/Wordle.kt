@@ -81,6 +81,7 @@ fun gameState(guess: String, word: String): String {
     for (i in 0..4) {
         if (wordCharacterCount[guess[i]] != 0 && word.contains(guess[i]) && guess[i] != word[i]) {
             colorCodedGuess[i] = "$ANSI_YELLOW${guess[i]}$ANSI_RESET"
+            wordCharacterCount[guess[i]] = wordCharacterCount[guess[i]]!!.minus(1)
             continue
         } else if (guess[i] == word[i]) {
             colorCodedGuess[i] = "$ANSI_GREEN${guess[i]}$ANSI_RESET"
